@@ -1,15 +1,9 @@
-Feature: Agregar articulo al carrito
-  Como cliente de Sauce Demo
-  Quiero agregar un articulo al carrito
-  Para poder comprarlo
+Feature: Flujo de compra en la tienda DemoBlaze
 
-  Background:
-    Given que estoy en la pagina del producto "Grey jacket"
-
-  Scenario: Verificar titulo y precio del producto
-    Then el titulo del producto debe ser "Grey jacket"
-    And el precio del producto debe ser "£55.00"
-
-  Scenario: Agregar un articulo al carrito y verificarlo
-    When agrego el producto al carrito
-    Then el producto "Grey jacket" debe aparecer en el carrito
+  Scenario: Comprar un producto exitosamente como usuario invitado
+    Given que el usuario navega a la página de inicio de Demoblaze
+    When selecciona el primer producto de la lista
+    And agrega el producto al carrito aceptando la alerta de confirmación
+    And se dirige al carrito de compras
+    And procede a realizar el pedido completando el formulario de compra
+    Then la orden se procesa y se muestra el mensaje "Thank you for your purchase!"
