@@ -2,34 +2,30 @@ pipeline {
     agent any
 
     tools {
+        // Enlaza tu Allure ya configurado y funcional
         allure 'Allure'
     }
 
     stages {
         stage('Clonar Repositorio') {
             steps {
+                // Jenkins clona usando tus campos de la interfaz gráfica
                 checkout scm
             }
         }
 
         stage('Inicializar Entorno') {
             steps {
-                echo 'Limpiando entorno y verificando permisos...'
-                // Si corre en Linux/Docker le da permisos al ejecutable
-                sh 'chmod +x gradlew' || true
+                echo 'Limpiando entorno y preparando variables para Windows...'
+                // Eliminamos el sh 'chmod' conflictivo ya que estás en Windows nativo
             }
         }
 
         stage('Ejecutar Pruebas Automatizadas') {
             steps {
                 echo 'Iniciando suite de pruebas Cucumber + Selenium en DemoBlaze...'
-                script {
-                    if (isUnix()) {
-                        sh './gradlew test --no-daemon'
-                    } else {
-                        bat 'gradlew.bat test --no-daemon'
-                    }
-                }
+                // Ejecución directa para tu entorno Windows usando el archivo por lotes .bat
+                bat 'gradlew.bat test --no-daemon'
             }
         }
     }
